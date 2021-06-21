@@ -1,45 +1,23 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React from "react";
+import "./App.css";
+import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import routerConfig, { IRouterConfig } from "./router";
+
+const renderRouter = (routerConfig: IRouterConfig): JSX.Element => {
+  return (
+    <BrowserRouter>
+      {routerConfig.map(({ path, component, redirect }) => {
+        if (redirect) {
+          return <Redirect key={path} path={path} to={redirect} />;
+        }
+        return <Route key={path} path={path} component={component} />;
+      })}
+    </BrowserRouter>
+  );
+};
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+  return renderRouter(routerConfig);
 }
 
-export default App
+export default App;
