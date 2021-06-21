@@ -1,10 +1,17 @@
-import Home from "@/pages/Home";
+import { lazy, LazyExoticComponent } from "react";
 
-export type IRouterConfig = {
-  path: string;
-  redirect?: string;
-  component?: () => JSX.Element;
-}[];
+const Home = lazy(() => import("@/pages/Home"));
+
+export type IRouterConfig = (
+  | {
+      path: string;
+      redirect: string;
+    }
+  | {
+      path: string;
+      component: LazyExoticComponent<() => JSX.Element>;
+    }
+)[];
 
 const routerConfig: IRouterConfig = [
   {
