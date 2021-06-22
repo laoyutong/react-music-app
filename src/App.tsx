@@ -15,7 +15,7 @@ const renderRouter = (routerConfig: IRouterConfig): JSX.Element[] => {
   });
 };
 
-function App() {
+function App(): JSX.Element {
   return (
     <Suspense fallback={null}>
       <BrowserRouter>

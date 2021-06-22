@@ -3,3 +3,11 @@ export interface IBannerData {
     imageUrl: string;
   }[];
 }
+
+export interface IRecommandListData {
+  result: {
+    id: number;
+    name: string;
+    picUrl: string;
+  }[];
+}

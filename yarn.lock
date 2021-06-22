@@ -411,6 +411,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-lazyload@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.nlark.com/@types/react-lazyload/download/@types/react-lazyload-3.1.0.tgz#97b167266afbc75f432eca01c50555adae21c5a4"
+  integrity sha1-l7FnJmr7x19DLsoBxQVVra4hxaQ=
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-router-dom@^5.1.7":
   version "5.1.7"
   resolved "https://registry.nlark.com/@types/react-router-dom/download/@types/react-router-dom-5.1.7.tgz#a126d9ea76079ffbbdb0d9225073eb5797ab7271"
@@ -1301,6 +1308,11 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.nlark.com/react-is/download/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha1-eJcppNw23imZ3BVt1sHZwYzqVqQ=
+
+react-lazyload@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/react-lazyload/download/react-lazyload-3.2.0.tgz#497bd06a6dbd7015e3376e1137a67dc47d2dd021"
+  integrity sha1-SXvQam29cBXjN24RN6Z9xH0t0CE=
 
 react-refresh@^0.9.0:
   version "0.9.0"
