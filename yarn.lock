@@ -687,6 +687,13 @@ decamelize@^1.1.0:
   resolved "https://registry.nlark.com/decamelize/download/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
+dom7@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/dom7/download/dom7-3.0.0.tgz#b861ce5d67a6becd7aaa3ad02942ff14b1240331"
+  integrity sha1-uGHOXWemvs16qjrQKUL/FLEkAzE=
+  dependencies:
+    ssr-window "^3.0.0-alpha.1"
+
 dot-prop@^5.1.0:
   version "5.3.0"
   resolved "https://registry.nlark.com/dot-prop/download/dot-prop-5.3.0.tgz#90ccce708cd9cd82cc4dc8c3ddd9abdd55b20e88"
@@ -1513,6 +1520,11 @@ split2@^3.0.0:
   dependencies:
     readable-stream "^3.0.0"
 
+ssr-window@^3.0.0, ssr-window@^3.0.0-alpha.1:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/ssr-window/download/ssr-window-3.0.0.tgz#fd5b82801638943e0cc704c4691801435af7ac37"
+  integrity sha1-/VuCgBY4lD4MxwTEaRgBQ1r3rDc=
+
 string-width@^4.1.0, string-width@^4.2.0:
   version "4.2.2"
   resolved "https://registry.npm.taobao.org/string-width/download/string-width-4.2.2.tgz#dafd4f9559a7585cfba529c6a0a4f73488ebd4c5"
@@ -1556,6 +1568,14 @@ supports-color@^7.1.0:
   integrity sha1-G33NyzK4E4gBs+R4umpRyqiWSNo=
   dependencies:
     has-flag "^4.0.0"
+
+swiper@^6.7.0:
+  version "6.7.0"
+  resolved "https://registry.nlark.com/swiper/download/swiper-6.7.0.tgz?cache=0&sync_timestamp=1622453050535&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fswiper%2Fdownload%2Fswiper-6.7.0.tgz#ec971e703d03ef6196354140fbb22b074642bf5c"
+  integrity sha1-7JcecD0D72GWNUFA+7IrB0ZCv1w=
+  dependencies:
+    dom7 "^3.0.0"
+    ssr-window "^3.0.0"
 
 text-extensions@^1.0.0:
   version "1.9.0"
