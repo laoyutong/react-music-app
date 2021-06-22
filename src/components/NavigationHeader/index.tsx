@@ -4,19 +4,11 @@ import { useHistory } from "react-router-dom";
 import classnames from "classnames";
 import { Search } from "@icon-park/react";
 
-const navigationHeaderConfig = [
-  { label: "首页", path: "/home" },
-  { label: "排行", path: "/rank" },
-  { label: "歌手", path: "/singer" },
-];
-
-const classListConfig = ["first", "middle", "last"] as const;
-
-const transformDisConfig = {
-  first: -82,
-  middle: 0,
-  last: 74,
-};
+import {
+  navigationHeaderConfig,
+  classListConfig,
+  transformDisConfig,
+} from "./config";
 
 const NavigationHeader = () => {
   const history = useHistory();
