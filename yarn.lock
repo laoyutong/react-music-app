@@ -374,6 +374,11 @@
   resolved "https://registry.nlark.com/@icon-park/react/download/@icon-park/react-1.3.3.tgz#d22dcacca46bb7bb117fdb95b5ce7783b68a4b7c"
   integrity sha1-0i3KzKRrt7sRf9uVtc53g7aKS3w=
 
+"@types/fastclick@^1.0.29":
+  version "1.0.29"
+  resolved "https://registry.nlark.com/@types/fastclick/download/@types/fastclick-1.0.29.tgz#90f43082848187b42250620f13ec93e32393169b"
+  integrity sha1-kPQwgoSBh7QiUGIPE+yT4yOTFps=
+
 "@types/history@*":
   version "4.7.8"
   resolved "https://registry.nlark.com/@types/history/download/@types/history-4.7.8.tgz#49348387983075705fe8f4e02fb67f7daaec4934"
@@ -761,6 +766,11 @@ escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npm.taobao.org/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+fastclick@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npm.taobao.org/fastclick/download/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a"
+  integrity sha1-FhYlsnsaWAZAWTa9qaLBkm0Gvmo=
 
 find-up@^4.1.0:
   version "4.1.0"
