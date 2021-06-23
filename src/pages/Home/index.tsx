@@ -31,7 +31,7 @@ const Home = (): JSX.Element => {
   }, []);
 
   return (
-    <>
+    <div className="home-container">
       <Swiper>
         {bannerImageList.map((url, index) => (
           <SwiperSlide className="swiper-slide" key={index}>
@@ -47,7 +47,7 @@ const Home = (): JSX.Element => {
           </div>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 

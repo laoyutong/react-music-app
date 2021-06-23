@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./index.less";
-import { useHistory } from "react-router-dom";
 import classnames from "classnames";
 import { Search } from "@icon-park/react";
 
@@ -10,36 +9,38 @@ import {
   transformDisConfig,
 } from "./config";
 
-const NavigationHeader = () => {
-  const history = useHistory();
+interface INavigationHeaderProps {
+  changeRouter: (path: string, index: number) => void;
+  routerIndex: number;
+}
+
+const NavigationHeader = ({
+  changeRouter,
+  routerIndex,
+}: INavigationHeaderProps) => {
+  const classConfigIndex = classListConfig[routerIndex];
 
   const underlineRef = useRef<HTMLDivElement>(null);
 
-  const activeRouter = history.location.pathname;
-
-  const [classIndex, setClassIndex] =
-    useState<keyof typeof transformDisConfig>("first");
-
   useEffect(() => {
     if (underlineRef.current) {
-      underlineRef.current.style.transform = `translateX(${transformDisConfig[classIndex]}px)`;
+      underlineRef.current.style.transform = `translate3d(${transformDisConfig[classConfigIndex]}px,0,0)`;
     }
-  }, [classIndex]);
+  }, [classConfigIndex]);
 
   return (
     <div className="navigation-header-container">
       {navigationHeaderConfig.map((config, index) => {
         const { label, path } = config;
-        const classListIndex = classListConfig[index];
+        const classListItem = classListConfig[index];
         return (
           <div
             key={label}
             onClick={() => {
-              history.push(path);
-              setClassIndex(classListIndex);
+              changeRouter(path, index);
             }}
-            className={classnames("navigation-item", classListIndex, {
-              "active-label": activeRouter === path,
+            className={classnames("navigation-item", classListItem, {
+              "active-label": index === routerIndex,
             })}
           >
             {label}

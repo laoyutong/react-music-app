@@ -1,26 +1,31 @@
-import { lazy, LazyExoticComponent } from "react";
+import Home from "@/pages/Home";
+import Rank from "@/pages/Rank";
+import Singer from "@/pages/Singer";
 
-const Home = lazy(() => import("@/pages/Home"));
+// import { lazy, LazyExoticComponent } from "react";
 
-export type IRouterConfig = (
-  | {
-      path: string;
-      redirect: string;
-    }
-  | {
-      path: string;
-      component: LazyExoticComponent<() => JSX.Element>;
-    }
-)[];
+// const Home = lazy(() => import("@/pages/Home"));
+// const Rank = lazy(() => import("@/pages/Rank"));
+// const Singer = lazy(() => import("@/pages/Singer"));
+
+export type IRouterConfig = {
+  path: string;
+  component: () => JSX.Element;
+  // LazyExoticComponent<() => JSX.Element>;
+}[];
 
 const routerConfig: IRouterConfig = [
   {
-    path: "/",
-    redirect: "/home",
-  },
-  {
     path: "/home",
     component: Home,
+  },
+  {
+    path: "/rank",
+    component: Rank,
+  },
+  {
+    path: "/singer",
+    component: Singer,
   },
 ];
 
