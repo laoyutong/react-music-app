@@ -28,7 +28,7 @@ const TransitionRouter = ({
         })
       }
     >
-      <CSSTransition key={pathname} timeout={500}>
+      <CSSTransition key={pathname} timeout={300}>
         <Switch location={location}>{renderRouter(routerConfig)}</Switch>
       </CSSTransition>
     </TransitionGroup>
