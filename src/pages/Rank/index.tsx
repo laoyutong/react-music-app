@@ -1,6 +1,6 @@
 import React from "react";
 
-const Rank = () => {
+const Rank = (): JSX.Element => {
   return <div>Rank </div>;
 };
 

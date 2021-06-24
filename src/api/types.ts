@@ -11,3 +11,16 @@ export interface IRecommandListData {
     picUrl: string;
   }[];
 }
+
+export interface ISingerListParams {
+  category: string;
+  alpha: string;
+}
+
+export interface ISingerListData {
+  artists: {
+    id: number;
+    picUrl: string;
+    name: string;
+  }[];
+}
