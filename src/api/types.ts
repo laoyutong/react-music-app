@@ -24,3 +24,12 @@ export interface ISingerListData {
     name: string;
   }[];
 }
+
+export interface IRankListData {
+  list: {
+    id: number;
+    name: string;
+    description: string;
+    coverImgUrl: string;
+  }[];
+}

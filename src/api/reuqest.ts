@@ -4,6 +4,7 @@ import {
   IRecommandListData,
   ISingerListParams,
   ISingerListData,
+  IRankListData,
 } from "./types";
 
 export const getBanner = (): Promise<IBannerData> => axios.get("/banner");
@@ -16,3 +17,6 @@ export const getSingerListRequest = ({
   alpha,
 }: ISingerListParams): Promise<ISingerListData> =>
   axios.get(`/artist/list?cat=${category}&initial=${alpha.toLowerCase()}`);
+
+export const getRankList = (): Promise<IRankListData> =>
+  axios.get("/toplist/detail");
