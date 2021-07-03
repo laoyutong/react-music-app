@@ -10,7 +10,7 @@ import {
 } from "./config";
 
 interface INavigationHeaderProps {
-  changeRouter: (path: string, index: number) => void;
+  changeRouter: (path: string, index?: number) => void;
   routerIndex: number;
 }
 
@@ -47,7 +47,13 @@ const NavigationHeader = ({
           </div>
         );
       })}
-      <Search className="search-logo" theme="outline" size="20" fill="#333" />
+      <Search
+        onClick={() => changeRouter("/search")}
+        className="search-logo"
+        theme="outline"
+        size="20"
+        fill="#333"
+      />
       <div className="active-underline" ref={underlineRef} />
     </div>
   );
