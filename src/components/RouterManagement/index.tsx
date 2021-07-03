@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, useHistory } from "react-router-dom";
 
 import NavigationHeader from "@/components/NavigationHeader";
@@ -6,29 +6,50 @@ import TransitionRouter, {
   ITransitionRouterProps,
 } from "@/components/TransitionRouter";
 
+const NO_INDEX = -1 as const;
+
 const RouterManagement = (): JSX.Element => {
   const history = useHistory();
 
   const [routerIndex, setRouterIndex] = useState<number>(0);
 
+  const prevIndex = useRef<number>(0);
+
   const [transitionClass, setTransitionClass] =
     useState<ITransitionRouterProps["transitionClass"]>("forward");
 
   useEffect(() => {
-    history.push("/home");
+    history.push("/search");
   }, []);
 
-  const changeRouter = (path: string, index: number) => {
-    if (routerIndex === index) return;
+  const changeRouter = (path: string, index: number = NO_INDEX) => {
     history.push(path);
-    setTransitionClass(index > routerIndex ? "forward" : "back");
     setRouterIndex(index);
+
+    if (routerIndex !== index) {
+      setTransitionClass(
+        index === NO_INDEX || index > routerIndex ? "forward" : "back"
+      );
+      if (index !== NO_INDEX) {
+        prevIndex.current = index;
+      }
+    }
+  };
+
+  const onRouterBack = () => {
+    history.goBack();
+    setRouterIndex(prevIndex.current);
+    setTransitionClass("back");
   };
 
   return (
     <>
       <NavigationHeader changeRouter={changeRouter} routerIndex={routerIndex} />
-      <TransitionRouter transitionClass={transitionClass} />
+      <TransitionRouter
+        changeRouter={changeRouter}
+        onRouterBack={onRouterBack}
+        transitionClass={transitionClass}
+      />
     </>
   );
 };
