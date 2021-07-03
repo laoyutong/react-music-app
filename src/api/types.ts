@@ -41,3 +41,22 @@ export interface ISearchHotListData {
     }[];
   };
 }
+
+export interface ISearchSingersData {
+  result: {
+    artists: {
+      id: number;
+      name: string;
+      picUrl: string;
+    }[];
+  };
+}
+
+export interface ISearchSongsData {
+  result: {
+    songs: {
+      id: string;
+      name: string;
+    }[];
+  };
+}

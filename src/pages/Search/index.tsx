@@ -4,15 +4,58 @@ import { Search as SearchLogo, CloseOne } from "@icon-park/react";
 
 import BackHeader from "@/components/BackHeader";
 import type { IRouterComponentProps } from "@/router";
-import { getSearchHotList } from "@/api/reuqest";
-import type { ISearchHotListData } from "@/api/types";
+import {
+  getSearchHotList,
+  getSearchSingers,
+  getSearchSongs,
+} from "@/api/reuqest";
+import type {
+  ISearchHotListData,
+  ISearchSingersData,
+  ISearchSongsData,
+} from "@/api/types";
+import { useDebounce } from "@/utils/hooks";
 
 const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>("");
 
+  const debouncedSearchValue = useDebounce(searchValue);
+
   const clearSearchValue = () => {
     setSearchValue("");
+    setSearchSingers([]);
+    setSearchSongs([]);
   };
+
+  const [searchSingers, setSearchSingers] = useState<
+    ISearchSingersData["result"]["artists"]
+  >([]);
+
+  const [searchSongs, setSearchSongs] = useState<
+    ISearchSongsData["result"]["songs"]
+  >([]);
+
+  const isShowSearchResult =
+    !!searchValue.trim() &&
+    (searchSingers.length !== 0 || searchSongs.length !== 0);
+
+  useEffect(() => {
+    (async () => {
+      if (!debouncedSearchValue.trim()) return;
+      const {
+        result: { songs },
+      } = await getSearchSongs(debouncedSearchValue);
+      setSearchSongs(songs || []);
+    })();
+
+    (async () => {
+      if (!debouncedSearchValue.trim()) return;
+      const {
+        result: { artists },
+      } = await getSearchSingers(debouncedSearchValue);
+      setSearchSingers(artists || []);
+    })();
+  }, [debouncedSearchValue]);
 
   const [searchHotList, setSearchHotList] = useState<
     ISearchHotListData["result"]["hots"]
@@ -42,7 +85,7 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
           }}
           placeholder="请输入搜索关键词"
         />
-        {!!searchValue && (
+        {!!searchValue.trim() && (
           <CloseOne
             onClick={clearSearchValue}
             theme="outline"
@@ -52,20 +95,38 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
           />
         )}
       </div>
-      <div className="search-show-list">
-        <div className="searc-show-title">热门搜索</div>
-        <div className="search-show-items">
-          {searchHotValueList.map((value) => (
-            <div
-              className="search-show-item"
-              key={value}
-              onClick={() => setSearchValue(value)}
-            >
-              {value}
+
+      {!isShowSearchResult && (
+        <div className="search-show-list">
+          <div className="searc-show-title">热门搜索</div>
+          <div className="search-show-items">
+            {searchHotValueList.map((value) => (
+              <div
+                className="search-show-item"
+                key={value}
+                onClick={() => setSearchValue(value)}
+              >
+                {value}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+      {isShowSearchResult && (
+        <div className="search-content">
+          {searchSingers.map(({ id, name, picUrl }) => (
+            <div className="search-singer-item" key={id}>
+              <img src={picUrl} alt="" />
+              <div className="search-singer-name">{name}</div>
+            </div>
+          ))}
+          {searchSongs.map(({ id, name }) => (
+            <div className="search-song-item" key={id}>
+              {name}
             </div>
           ))}
         </div>
-      </div>
+      )}
     </div>
   );
 };

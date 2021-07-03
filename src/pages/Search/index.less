@@ -6,6 +6,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 600;
+
   .search-input-area {
     position: relative;
     display: flex;
@@ -45,6 +46,31 @@
         border-radius: 5px;
         margin-right: 12px;
       }
+    }
+  }
+
+  .search-content {
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    top: 80px;
+
+    .search-singer-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      img {
+        width: 80px;
+        height: 80px;
+      }
+      .search-singer-name {
+        margin-left: 10px;
+      }
+    }
+    .search-song-item {
+      padding: 10px 20px;
+      font-size: 15px;
     }
   }
 }
