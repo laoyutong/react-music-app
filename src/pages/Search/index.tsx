@@ -14,7 +14,8 @@ import type {
   ISearchSingersData,
   ISearchSongsData,
 } from "@/api/types";
-import { useDebounce } from "@/utils/hooks";
+import { useDebounce, useImmer } from "@/utils/hooks";
+import { HISTORY_SEARCH_KEY } from "@/config";
 
 const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -72,6 +73,31 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     })();
   }, []);
 
+  const [searchHistoryList, setSearchHistoryList] = useImmer<string[]>([]);
+
+  useEffect(() => {
+    setSearchHistoryList(
+      JSON.parse(localStorage.getItem(HISTORY_SEARCH_KEY) || "[]")
+    );
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(HISTORY_SEARCH_KEY, JSON.stringify(searchHistoryList));
+  }, [searchHistoryList]);
+
+  const addHistoryList = (value: string) => {
+    setSearchHistoryList((draft) => {
+      const index = draft.indexOf(value);
+      if (index !== -1) {
+        draft.splice(index, 1);
+      }
+      if (draft.length >= 10) {
+        draft.pop();
+      }
+      draft.unshift(value);
+    });
+  };
+
   return (
     <div className="search-container">
       <BackHeader onBack={onRouterBack} title="搜索页面" />
@@ -97,31 +123,58 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
       </div>
 
       {!isShowSearchResult && (
-        <div className="search-show-list">
-          <div className="searc-show-title">热门搜索</div>
-          <div className="search-show-items">
-            {searchHotValueList.map((value) => (
-              <div
-                className="search-show-item"
-                key={value}
-                onClick={() => setSearchValue(value)}
-              >
-                {value}
-              </div>
-            ))}
+        <>
+          <div className="search-show-list">
+            <div className="searc-show-title">热门搜索</div>
+            <div className="search-show-items">
+              {searchHotValueList.map((value) => (
+                <div
+                  className="search-show-item"
+                  key={value}
+                  onClick={() => setSearchValue(value)}
+                >
+                  {value}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+
+          {!!searchHistoryList.length && (
+            <div className="search-show-list">
+              <div className="searc-show-title">历史搜索</div>
+              <div className="search-show-items">
+                {searchHistoryList.map((value) => (
+                  <div
+                    className="search-show-item"
+                    key={value}
+                    onClick={() => setSearchValue(value)}
+                  >
+                    {value}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
       {isShowSearchResult && (
         <div className="search-content">
           {searchSingers.map(({ id, name, picUrl }) => (
-            <div className="search-singer-item" key={id}>
+            <div
+              className="search-singer-item"
+              key={id}
+              onClick={() => addHistoryList(name)}
+            >
               <img src={picUrl} alt="" />
               <div className="search-singer-name">{name}</div>
             </div>
           ))}
           {searchSongs.map(({ id, name }) => (
-            <div className="search-song-item" key={id}>
+            <div
+              className="search-song-item"
+              key={id}
+              onClick={() => addHistoryList(name)}
+            >
               {name}
             </div>
           ))}
