@@ -5,6 +5,7 @@ import {
   ISingerListParams,
   ISingerListData,
   IRankListData,
+  ISearchHotListData,
 } from "./types";
 
 export const getBanner = (): Promise<IBannerData> => axios.get("/banner");
@@ -20,3 +21,6 @@ export const getSingerListRequest = ({
 
 export const getRankList = (): Promise<IRankListData> =>
   axios.get("/toplist/detail");
+
+export const getSearchHotList = (): Promise<ISearchHotListData> =>
+  axios.get("/search/hot");

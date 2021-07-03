@@ -33,3 +33,11 @@ export interface IRankListData {
     coverImgUrl: string;
   }[];
 }
+
+export interface ISearchHotListData {
+  result: {
+    hots: {
+      first: string;
+    }[];
+  };
+}

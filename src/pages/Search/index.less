@@ -1,0 +1,50 @@
+.search-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  width: 100vw;
+  height: 100vh;
+  z-index: 600;
+  .search-input-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    input {
+      flex: 1;
+      margin-left: 10px;
+      border-radius: 5px;
+      height: 20px;
+      text-indent: 0.5em;
+      outline: none;
+      padding-right: 20px;
+    }
+
+    .clear-input-logo {
+      position: absolute;
+      right: 25px;
+    }
+  }
+
+  .search-show-list {
+    padding: 10px 20px;
+    .search-show-title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .search-show-items {
+      display: flex;
+      flex-wrap: wrap;
+      .search-show-item {
+        font-size: 14px;
+        margin-top: 7px;
+        padding: 1px 5px;
+        border: 1px solid;
+        border-radius: 5px;
+        margin-right: 12px;
+      }
+    }
+  }
+}
