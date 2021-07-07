@@ -25,16 +25,13 @@ export const useImmer = <S>(
 ): [state: S, next: (state: S | ImmerProduce<S>) => void] => {
   const [state, setState] = useState(initialState);
 
-  const pruduceState = useCallback(
-    (next: S | ImmerProduce<S>) => {
-      if (isProduce(next)) {
-        console.log(123);
-        return setState(produce(state, next));
-      }
-      return setState(next);
-    },
-    [state]
-  );
+  const pruduceState = useCallback((next: S | ImmerProduce<S>) => {
+    if (isProduce(next)) {
+      console.log(123);
+      return setState((state) => produce(state, next));
+    }
+    return setState(next);
+  }, []);
 
   return [state, pruduceState];
 };
