@@ -7,7 +7,11 @@ import { alphabetList, singerCategoryTypes } from "@/config/singer";
 import { getSingerListRequest } from "@/api/reuqest";
 import type { ISingerListData } from "@/api/types";
 
-const Singer = (): JSX.Element => {
+const Singer = ({
+  changeRouter,
+}: {
+  changeRouter: (path: string, index?: number) => void;
+}): JSX.Element => {
   const [singerList, setSingerList] = useState<ISingerListData["artists"]>([]);
 
   const [activeAlphabet, setActiveAlphabet] = useState<string>(alphabetList[0]);
@@ -26,6 +30,10 @@ const Singer = (): JSX.Element => {
       setSingerList(artists);
     })();
   }, [activeCategory, activeAlphabet]);
+
+  const handleClick = (id: number) => {
+    changeRouter(`/singerDetail?id=${id}`);
+  };
 
   return (
     <div className="singer-container">
@@ -58,7 +66,11 @@ const Singer = (): JSX.Element => {
         ))}
       </div>
       {singerList.map(({ id, picUrl, name }) => (
-        <div className="singer-list-item" key={id}>
+        <div
+          className="singer-list-item"
+          key={id}
+          onClick={() => handleClick(id)}
+        >
           <LazyLoad>
             <img src={picUrl} alt="" />
           </LazyLoad>

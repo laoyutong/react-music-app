@@ -60,3 +60,14 @@ export interface ISearchSongsData {
     }[];
   };
 }
+
+export interface ISingerDetailData {
+  artist: {
+    name: string;
+    picUrl: string;
+  };
+  hotSongs: {
+    id: number;
+    name: string;
+  }[];
+}

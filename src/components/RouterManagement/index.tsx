@@ -19,7 +19,7 @@ const RouterManagement = (): JSX.Element => {
     useState<ITransitionRouterProps["transitionClass"]>("forward");
 
   useEffect(() => {
-    history.push("/search");
+    history.push("/singerDetail?id=12174057");
   }, []);
 
   const changeRouter = (path: string, index: number = NO_INDEX) => {

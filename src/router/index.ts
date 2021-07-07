@@ -2,6 +2,7 @@ import Home from "@/pages/Home";
 import Rank from "@/pages/Rank";
 import Singer from "@/pages/Singer";
 import Search from "@/pages/Search";
+import SingerDetail from "@/pages/SingerDetail";
 
 // import { lazy, LazyExoticComponent } from "react";
 
@@ -36,6 +37,10 @@ const routerConfig: IRouterConfig = [
   {
     path: "/search",
     component: Search,
+  },
+  {
+    path: "/singerDetail",
+    component: SingerDetail,
   },
 ];
 

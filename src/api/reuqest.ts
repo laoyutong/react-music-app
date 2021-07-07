@@ -8,6 +8,7 @@ import {
   ISearchHotListData,
   ISearchSingersData,
   ISearchSongsData,
+  ISingerDetailData,
 } from "./types";
 
 export const getBanner = (): Promise<IBannerData> => axios.get("/banner");
@@ -34,3 +35,6 @@ export const getSearchSingers = (
   keywords: string
 ): Promise<ISearchSingersData> =>
   axios.get(`/search/suggest?keywords=${keywords}`);
+
+export const getSingerDetail = (id: string): Promise<ISingerDetailData> =>
+  axios.get(`/artists?id=${id}`);
