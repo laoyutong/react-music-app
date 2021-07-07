@@ -6,8 +6,9 @@ import LazyLoad from "react-lazyload";
 
 import { getBanner, getRecommandList } from "@/api/reuqest";
 import type { IBannerData, IRecommandListData } from "@/api/types";
+import type { IRouterComponentProps } from "@/router";
 
-const Home = (): JSX.Element => {
+const Home = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
   const [bannerList, setBannerList] = useState<IBannerData["banners"]>([]);
 
   const bannerImageList = bannerList.map((banner) => banner.imageUrl);
@@ -30,6 +31,10 @@ const Home = (): JSX.Element => {
     })();
   }, []);
 
+  const handleClick = (id: number) => {
+    changeRouter(`/albumDetail?id=${id}`);
+  };
+
   return (
     <div className="home-container">
       <Swiper>
@@ -38,12 +43,16 @@ const Home = (): JSX.Element => {
             <img src={url} />
           </SwiperSlide>
         ))}
-        {recommandList.map((recommand) => (
-          <div key={recommand.id} className="recommand-item">
+        {recommandList.map(({ id, picUrl, name }) => (
+          <div
+            key={id}
+            className="recommand-item"
+            onClick={() => handleClick(id)}
+          >
             <LazyLoad>
-              <img src={recommand.picUrl} alt="" />
+              <img src={picUrl} alt="" />
             </LazyLoad>
-            <div className="recommand-name">{recommand.name}</div>
+            <div className="recommand-name">{name}</div>
           </div>
         ))}
       </Swiper>

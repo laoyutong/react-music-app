@@ -71,3 +71,14 @@ export interface ISingerDetailData {
     name: string;
   }[];
 }
+
+export interface IAlbumDetailData {
+  playlist: {
+    name: string;
+    coverImgUrl: string;
+    tracks: {
+      id: number;
+      name: string;
+    }[];
+  };
+}

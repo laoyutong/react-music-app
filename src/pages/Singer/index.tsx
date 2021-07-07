@@ -6,12 +6,9 @@ import LazyLoad from "react-lazyload";
 import { alphabetList, singerCategoryTypes } from "@/config/singer";
 import { getSingerListRequest } from "@/api/reuqest";
 import type { ISingerListData } from "@/api/types";
+import type { IRouterComponentProps } from "@/router";
 
-const Singer = ({
-  changeRouter,
-}: {
-  changeRouter: (path: string, index?: number) => void;
-}): JSX.Element => {
+const Singer = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
   const [singerList, setSingerList] = useState<ISingerListData["artists"]>([]);
 
   const [activeAlphabet, setActiveAlphabet] = useState<string>(alphabetList[0]);

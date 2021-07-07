@@ -4,8 +4,9 @@ import LazyLoad from "react-lazyload";
 
 import { getRankList } from "@/api/reuqest";
 import type { IRankListData } from "@/api/types";
+import type { IRouterComponentProps } from "@/router";
 
-const Rank = (): JSX.Element => {
+const Rank = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
   const [rankList, setRankList] = useState<IRankListData["list"]>([]);
 
   useEffect(() => {
@@ -15,10 +16,14 @@ const Rank = (): JSX.Element => {
     })();
   }, []);
 
+  const handleClick = (id: number) => {
+    changeRouter(`/albumDetail?id=${id}`);
+  };
+
   return (
     <div className="rank-container">
       {rankList.map(({ coverImgUrl, id, name, description }) => (
-        <div className="rank-item" key={id}>
+        <div className="rank-item" key={id} onClick={() => handleClick(id)}>
           <LazyLoad>
             <img src={coverImgUrl} alt="" />
           </LazyLoad>

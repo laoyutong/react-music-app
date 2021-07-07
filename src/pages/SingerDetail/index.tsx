@@ -5,17 +5,14 @@ import qs from "query-string";
 
 import { getSingerDetail } from "@/api/reuqest";
 import type { ISingerDetailData } from "@/api/types";
+import type { IRouterComponentProps } from "@/router";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
 
-interface ISingerDetailProps {
-  onRouterBack: () => void;
-}
-
 type ISingerMsg = ISingerDetailData["artist"];
 
-const SingerDetail = ({ onRouterBack }: ISingerDetailProps): JSX.Element => {
+const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   const [singerMsg, setSingerMsg] = useState<ISingerMsg>({} as ISingerMsg);
 
   const [singerSongs, setSingerSongs] = useState<ISingerDetailData["hotSongs"]>(
