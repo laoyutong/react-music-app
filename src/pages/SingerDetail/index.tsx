@@ -3,19 +3,18 @@ import "./index.less";
 import { useLocation } from "react-router-dom";
 import qs from "query-string";
 
-import { getSingerDetail } from "@/api/reuqest";
-import type { ISingerDetailData } from "@/api/types";
+import artistsApi, { SingerDetailData } from "@/api/artists";
 import type { IRouterComponentProps } from "@/router";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
 
-type ISingerMsg = ISingerDetailData["artist"];
+type ISingerMsg = SingerDetailData["artist"];
 
 const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   const [singerMsg, setSingerMsg] = useState<ISingerMsg>({} as ISingerMsg);
 
-  const [singerSongs, setSingerSongs] = useState<ISingerDetailData["hotSongs"]>(
+  const [singerSongs, setSingerSongs] = useState<SingerDetailData["hotSongs"]>(
     []
   );
 
@@ -25,7 +24,7 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     (async () => {
       const { id } = qs.parse(location.search);
 
-      const { artist, hotSongs } = await getSingerDetail(id as string);
+      const { artist, hotSongs } = await artistsApi(id as string);
       setSingerMsg(artist);
       setSingerSongs(hotSongs);
     })();

@@ -4,16 +4,10 @@ import { Search as SearchLogo, CloseOne } from "@icon-park/react";
 
 import BackHeader from "@/components/BackHeader";
 import type { IRouterComponentProps } from "@/router";
-import {
-  getSearchHotList,
-  getSearchSingers,
-  getSearchSongs,
-} from "@/api/reuqest";
-import type {
-  ISearchHotListData,
-  ISearchSingersData,
-  ISearchSongsData,
-} from "@/api/types";
+
+import searchApi, { SearchSongsData } from "@/api/search";
+import searchSuggestApi, { SearchSingersData } from "@/api/searchSuggest";
+import searchHotApi, { SearchHotListData } from "@/api/searchHot";
 import { useDebounce, useImmer } from "@/utils/hooks";
 import { HISTORY_SEARCH_KEY } from "@/config";
 
@@ -29,11 +23,11 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   };
 
   const [searchSingers, setSearchSingers] = useState<
-    ISearchSingersData["result"]["artists"]
+    SearchSingersData["result"]["artists"]
   >([]);
 
   const [searchSongs, setSearchSongs] = useState<
-    ISearchSongsData["result"]["songs"]
+    SearchSongsData["result"]["songs"]
   >([]);
 
   const isShowSearchResult =
@@ -45,7 +39,7 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
       if (!debouncedSearchValue.trim()) return;
       const {
         result: { songs },
-      } = await getSearchSongs(debouncedSearchValue);
+      } = await searchApi(debouncedSearchValue);
       setSearchSongs(songs || []);
     })();
 
@@ -53,13 +47,13 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
       if (!debouncedSearchValue.trim()) return;
       const {
         result: { artists },
-      } = await getSearchSingers(debouncedSearchValue);
+      } = await searchSuggestApi(debouncedSearchValue);
       setSearchSingers(artists || []);
     })();
   }, [debouncedSearchValue]);
 
   const [searchHotList, setSearchHotList] = useState<
-    ISearchHotListData["result"]["hots"]
+    SearchHotListData["result"]["hots"]
   >([]);
 
   const searchHotValueList = searchHotList.map((item) => item.first);
@@ -68,7 +62,7 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     (async () => {
       const {
         result: { hots },
-      } = await getSearchHotList();
+      } = await searchHotApi();
       setSearchHotList(hots);
     })();
   }, []);

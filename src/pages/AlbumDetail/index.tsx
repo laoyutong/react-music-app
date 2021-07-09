@@ -3,14 +3,13 @@ import "./index.less";
 import qs from "query-string";
 import { useLocation } from "react-router-dom";
 
-import { getAlbumDetail } from "@/api/reuqest";
-import type { IAlbumDetailData } from "@/api/types";
+import playlistDetailApi, { AlbumDetailData } from "@/api/playlistDetail";
 import type { IRouterComponentProps } from "@/router";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
 
-type IAlbumPlaylist = IAlbumDetailData["playlist"];
+type IAlbumPlaylist = AlbumDetailData["playlist"];
 
 const AlbumDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   const { search } = useLocation();
@@ -24,7 +23,7 @@ const AlbumDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const { id } = qs.parse(search);
-      const { playlist } = await getAlbumDetail(id as string);
+      const { playlist } = await playlistDetailApi(id as string);
       setAlbumData(playlist);
     })();
   }, []);

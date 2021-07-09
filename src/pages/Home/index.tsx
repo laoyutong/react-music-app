@@ -4,29 +4,29 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import LazyLoad from "react-lazyload";
 
-import { getBanner, getRecommandList } from "@/api/reuqest";
-import type { IBannerData, IRecommandListData } from "@/api/types";
+import bannerApi, { BannerData } from "@/api/banner";
+import personalizedApi, { RecommandListData } from "@/api/personalized";
 import type { IRouterComponentProps } from "@/router";
 
 const Home = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
-  const [bannerList, setBannerList] = useState<IBannerData["banners"]>([]);
+  const [bannerList, setBannerList] = useState<BannerData["banners"]>([]);
 
   const bannerImageList = bannerList.map((banner) => banner.imageUrl);
 
   useEffect(() => {
     (async () => {
-      const { banners } = await getBanner();
+      const { banners } = await bannerApi();
       setBannerList(banners);
     })();
   }, []);
 
   const [recommandList, setRecommandList] = useState<
-    IRecommandListData["result"]
+    RecommandListData["result"]
   >([]);
 
   useEffect(() => {
     (async () => {
-      const { result } = await getRecommandList();
+      const { result } = await personalizedApi();
       setRecommandList(result);
     })();
   }, []);

@@ -4,12 +4,11 @@ import classnames from "classnames";
 import LazyLoad from "react-lazyload";
 
 import { alphabetList, singerCategoryTypes } from "@/config/singer";
-import { getSingerListRequest } from "@/api/reuqest";
-import type { ISingerListData } from "@/api/types";
+import artistListApi, { SingerListData } from "@/api/artistList";
 import type { IRouterComponentProps } from "@/router";
 
 const Singer = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
-  const [singerList, setSingerList] = useState<ISingerListData["artists"]>([]);
+  const [singerList, setSingerList] = useState<SingerListData["artists"]>([]);
 
   const [activeAlphabet, setActiveAlphabet] = useState<string>(alphabetList[0]);
 
@@ -20,7 +19,7 @@ const Singer = ({ changeRouter }: IRouterComponentProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      const { artists } = await getSingerListRequest({
+      const { artists } = await artistListApi({
         category: activeCategory.key,
         alpha: activeAlphabet,
       });
