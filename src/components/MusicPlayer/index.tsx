@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { PlayOnce, ShuffleOne, LoopOnce } from "@icon-park/react";
 
 import songUrlApi from "@/api/songUrl";
 import type { StoreState } from "@/store/types";
@@ -13,7 +14,24 @@ interface MusicPlayerProps {
   musicPlayIndex: StoreState["musicPlayIndex"];
 }
 
-export type PlayMode = "order" | "random" | "cycle";
+enum PlayMode {
+  "ORDER",
+  "RANDOM",
+  "CYCLE",
+}
+
+const playModeList: PlayMode[] = [
+  PlayMode.ORDER,
+  PlayMode.RANDOM,
+  PlayMode.CYCLE,
+  PlayMode.ORDER,
+];
+
+const PLAY_MODE_MAP: Record<PlayMode, JSX.Element> = {
+  [PlayMode.ORDER]: <LoopOnce theme="outline" size="32" fill="#333" />,
+  [PlayMode.RANDOM]: <ShuffleOne theme="outline" size="32" fill="#333" />,
+  [PlayMode.CYCLE]: <PlayOnce theme="outline" size="32" fill="#333" />,
+};
 
 const MusicPlayer = ({
   musicPlaylist,
@@ -23,12 +41,11 @@ const MusicPlayer = ({
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
-  const [playMode, setPlayMode] = useState<PlayMode>("order");
+  const [playMode, setPlayMode] = useState<PlayMode>(PlayMode.ORDER);
 
   const changePlayMode = () => {
-    const arr = ["order", "random", "cycle", "order"] as PlayMode[];
-    const index = arr.indexOf(playMode);
-    setPlayMode(arr[index + 1]);
+    const index = playModeList.indexOf(playMode);
+    setPlayMode(playModeList[index + 1]);
   };
 
   const setMusicPlayIndex = useSetMusicPlayIndex();
@@ -48,9 +65,9 @@ const MusicPlayer = ({
         setMusicPlayIndex(musicPlaylistLength - 1);
       }
     };
-    if (playMode === "order") {
+    if (playMode === PlayMode.ORDER) {
       prevFn();
-    } else if (playMode === "cycle") {
+    } else if (playMode === PlayMode.CYCLE) {
       if (isAuto) {
         audioRef.current?.play();
       } else {
@@ -75,9 +92,9 @@ const MusicPlayer = ({
         setMusicPlayIndex(0);
       }
     };
-    if (playMode === "order") {
+    if (playMode === PlayMode.ORDER) {
       nextFn();
-    } else if (playMode === "cycle") {
+    } else if (playMode === PlayMode.CYCLE) {
       if (isAuto) {
         audioRef.current?.play();
       } else {
@@ -132,7 +149,7 @@ const MusicPlayer = ({
           name={activeMusic.name}
           status={isPlay}
           toggle={toggleIsPlay}
-          mode={playMode}
+          modeLogo={PLAY_MODE_MAP[playMode]}
           changeMode={changePlayMode}
           next={changeNextSong}
           prev={changePrevSong}

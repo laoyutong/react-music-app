@@ -1,39 +1,23 @@
 import React from "react";
 import "./index.less";
 
-import type { PlayMode } from "../../";
-
-import {
-  PauseOne,
-  Play,
-  PlayOnce,
-  ShuffleOne,
-  LoopOnce,
-  GoStart,
-  GoEnd,
-} from "@icon-park/react";
+import { PauseOne, Play, GoStart, GoEnd } from "@icon-park/react";
 
 interface MiniPlayerProps {
   name: string;
   status: boolean;
   toggle: () => void;
-  mode: PlayMode;
+  modeLogo: JSX.Element;
   changeMode: () => void;
   next: (isAuto: boolean) => void;
   prev: (isAuto: boolean) => void;
 }
 
-const PLAY_MODE = {
-  order: <LoopOnce theme="outline" size="32" fill="#333" />,
-  random: <ShuffleOne theme="outline" size="32" fill="#333" />,
-  cycle: <PlayOnce theme="outline" size="32" fill="#333" />,
-};
-
 const MiniPlayer = ({
   name,
   status,
   toggle,
-  mode,
+  modeLogo,
   changeMode,
   next,
   prev,
@@ -64,7 +48,7 @@ const MiniPlayer = ({
           />
         </div>
         <div className="mode" onClick={changeMode}>
-          {PLAY_MODE[mode]}
+          {modeLogo}
         </div>
       </div>
     </div>
