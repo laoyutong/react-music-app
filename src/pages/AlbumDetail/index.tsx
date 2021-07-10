@@ -5,6 +5,10 @@ import { useLocation } from "react-router-dom";
 
 import playlistDetailApi, { AlbumDetailData } from "@/api/playlistDetail";
 import type { IRouterComponentProps } from "@/router";
+import {
+  useAddMusicPlaylist,
+  useSetMusicPlaylist,
+} from "@/store/musicPlaylistReducer";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
@@ -28,15 +32,23 @@ const AlbumDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     })();
   }, []);
 
+  const addMusicPlaylist = useAddMusicPlaylist();
+
+  const setMusicPlaylist = useSetMusicPlaylist();
+
   return (
     <div className="album-detail-container">
       <BackHeader title={albumData.name} onBack={onRouterBack} />
       <div className="album-detail-pic">
         <img src={albumData.coverImgUrl} alt="" />
       </div>
-      <PlayAll />
+      <PlayAll onClick={() => setMusicPlaylist(albumTracks)} />
       {albumTracks.map(({ id, name }) => (
-        <div className="album-track-item" key={id}>
+        <div
+          className="album-track-item"
+          key={id}
+          onClick={() => addMusicPlaylist({ id, name })}
+        >
           {name}
         </div>
       ))}

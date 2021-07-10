@@ -1,0 +1,30 @@
+.mini-player-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #fff;
+  width: 100vw;
+  height: 60px;
+  z-index: 500;
+  border-top: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .name {
+    width: 50vw;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .opt-area {
+    display: flex;
+    justify-content: space-around;
+    width: 45vw;
+    .opt-left {
+      display: flex;
+    }
+  }
+}

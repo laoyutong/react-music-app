@@ -8,7 +8,7 @@ import type { IRouterComponentProps } from "@/router";
 import searchApi, { SearchSongsData } from "@/api/search";
 import searchSuggestApi, { SearchSingersData } from "@/api/searchSuggest";
 import searchHotApi, { SearchHotListData } from "@/api/searchHot";
-import { useDebounce, useImmer } from "@/utils/hooks";
+import { useDebounce, useImmer } from "@/utils";
 import { HISTORY_SEARCH_KEY } from "@/config";
 
 const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {

@@ -5,6 +5,10 @@ import qs from "query-string";
 
 import artistsApi, { SingerDetailData } from "@/api/artists";
 import type { IRouterComponentProps } from "@/router";
+import {
+  useAddMusicPlaylist,
+  useSetMusicPlaylist,
+} from "@/store/musicPlaylistReducer";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
@@ -30,15 +34,23 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     })();
   }, []);
 
+  const addMusicPlaylist = useAddMusicPlaylist();
+
+  const setMusicPlaylist = useSetMusicPlaylist();
+
   return (
     <div className="singer-detail-container">
       <BackHeader onBack={onRouterBack} title={singerMsg.name} />
       <div className="singer-pic">
         <img src={singerMsg.picUrl} alt="" />
       </div>
-      <PlayAll />
+      <PlayAll onClick={() => setMusicPlaylist(singerSongs)} />
       {singerSongs.map(({ id, name }) => (
-        <div className="singer-songs-item" key={id}>
+        <div
+          className="singer-songs-item"
+          key={id}
+          onClick={() => addMusicPlaylist({ id, name })}
+        >
           {name}
         </div>
       ))}
