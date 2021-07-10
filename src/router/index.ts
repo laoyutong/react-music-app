@@ -22,6 +22,8 @@ export type IRouterConfig = {
   // LazyExoticComponent<() => JSX.Element>;
 }[];
 
+export const routerWithHeader = ["/home", "/rank", "/singer"] 
+
 const routerConfig: IRouterConfig = [
   {
     path: "/home",

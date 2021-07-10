@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter, useHistory } from "react-router-dom";
+import { BrowserRouter, useHistory, useLocation } from "react-router-dom";
 
 import NavigationHeader from "@/components/NavigationHeader";
 import TransitionRouter, {
   ITransitionRouterProps,
 } from "@/components/TransitionRouter";
+import { routerWithHeader } from "@/router";
 
 const NO_INDEX = -1 as const;
 
 const RouterManagement = (): JSX.Element => {
   const history = useHistory();
+  const { pathname } = useLocation();
 
   const [routerIndex, setRouterIndex] = useState<number>(0);
 
@@ -44,7 +46,12 @@ const RouterManagement = (): JSX.Element => {
 
   return (
     <>
-      <NavigationHeader changeRouter={changeRouter} routerIndex={routerIndex} />
+      {routerWithHeader.includes(pathname) && (
+        <NavigationHeader
+          changeRouter={changeRouter}
+          routerIndex={routerIndex}
+        />
+      )}
       <TransitionRouter
         changeRouter={changeRouter}
         onRouterBack={onRouterBack}
