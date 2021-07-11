@@ -8,6 +8,9 @@ export interface SingerDetailData {
   hotSongs: {
     id: number;
     name: string;
+    al: {
+      picUrl: string;
+    };
   }[];
 }
 

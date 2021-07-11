@@ -7,6 +7,9 @@ export interface AlbumDetailData {
     tracks: {
       id: number;
       name: string;
+      al: {
+        picUrl: string;
+      };
     }[];
   };
 }

@@ -36,18 +36,26 @@ const AlbumDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
 
   const setMusicPlaylist = useSetMusicPlaylist();
 
+  const handledAlbumTracks = albumTracks.map(
+    ({ id, name, al: { picUrl } }) => ({
+      id,
+      name,
+      picUrl,
+    })
+  );
+
   return (
     <div className="album-detail-container">
       <BackHeader title={albumData.name} onBack={onRouterBack} />
       <div className="album-detail-pic">
         <img src={albumData.coverImgUrl} alt="" />
       </div>
-      <PlayAll onClick={() => setMusicPlaylist(albumTracks)} />
-      {albumTracks.map(({ id, name }) => (
+      <PlayAll onClick={() => setMusicPlaylist(handledAlbumTracks)} />
+      {handledAlbumTracks.map(({ id, name, picUrl }) => (
         <div
           className="album-track-item"
           key={id}
-          onClick={() => addMusicPlaylist({ id, name })}
+          onClick={() => addMusicPlaylist({ id, name, picUrl })}
         >
           {name}
         </div>

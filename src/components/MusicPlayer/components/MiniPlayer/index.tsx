@@ -11,6 +11,7 @@ interface MiniPlayerProps {
   changeMode: () => void;
   next: (isAuto: boolean) => void;
   prev: (isAuto: boolean) => void;
+  onOpen: () => void;
 }
 
 const MiniPlayer = ({
@@ -21,10 +22,13 @@ const MiniPlayer = ({
   changeMode,
   next,
   prev,
+  onOpen,
 }: MiniPlayerProps): JSX.Element => {
   return (
     <div className="mini-player-container">
-      <div className="name">{name}</div>
+      <div className="name" onClick={onOpen}>
+        {name}
+      </div>
       <div className="opt-area">
         <div className="opt-left">
           <GoStart

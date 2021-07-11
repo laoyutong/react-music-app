@@ -38,18 +38,26 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
 
   const setMusicPlaylist = useSetMusicPlaylist();
 
+  const handledSingerSongs = singerSongs.map(
+    ({ id, name, al: { picUrl } }) => ({
+      id,
+      name,
+      picUrl,
+    })
+  );
+
   return (
     <div className="singer-detail-container">
       <BackHeader onBack={onRouterBack} title={singerMsg.name} />
       <div className="singer-pic">
         <img src={singerMsg.picUrl} alt="" />
       </div>
-      <PlayAll onClick={() => setMusicPlaylist(singerSongs)} />
-      {singerSongs.map(({ id, name }) => (
+      <PlayAll onClick={() => setMusicPlaylist(handledSingerSongs)} />
+      {handledSingerSongs.map(({ id, name, picUrl }) => (
         <div
           className="singer-songs-item"
           key={id}
-          onClick={() => addMusicPlaylist({ id, name })}
+          onClick={() => addMusicPlaylist({ id, name, picUrl })}
         >
           {name}
         </div>
