@@ -1,6 +1,13 @@
-import { createStore, combineReducers } from "redux";
+import { observable } from "@formily/reactive";
 
-import musicPlaylist from "./musicPlaylistReducer";
-import musicPlayIndex from "./musicPlayIndexReducer";
+export interface StoreState {
+  musicPlaylist: { id: number; name: string; picUrl: string }[];
+  musicPlayIndex: number;
+}
 
-export default createStore(combineReducers({ musicPlaylist, musicPlayIndex }));
+const store = observable<StoreState>({
+  musicPlaylist: [],
+  musicPlayIndex: 0,
+});
+
+export default store;

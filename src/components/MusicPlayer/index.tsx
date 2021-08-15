@@ -1,18 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { PlayOnce, ShuffleOne, LoopOnce } from "@icon-park/react";
+import { observer } from "@formily/reactive-react";
 
+import type { StoreState } from "@/store";
 import songUrlApi from "@/api/songUrl";
 import LyricApi from "@/api/lyric";
-import type { StoreState } from "@/store/types";
-import { useSetMusicPlayIndex } from "@/store/musicPlayIndexReducer";
 
 import MiniPlayer from "./components/MiniPlayer";
 import FullPlayer from "./components/FullPlayer";
-
-interface MusicPlayerProps {
-  musicPlaylist: StoreState["musicPlaylist"];
-  musicPlayIndex: StoreState["musicPlayIndex"];
-}
 
 enum PlayMode {
   "ORDER",
@@ -58,7 +53,7 @@ const getRandomNum = (now: number, total: number): number => {
 const MusicPlayer = ({
   musicPlaylist,
   musicPlayIndex,
-}: MusicPlayerProps): JSX.Element => {
+}: StoreState): JSX.Element => {
   const [isFull, setIsFull] = useState<boolean>(false);
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -70,8 +65,6 @@ const MusicPlayer = ({
     setPlayMode(playModeList[index + 1]);
   };
 
-  const setMusicPlayIndex = useSetMusicPlayIndex();
-
   const musicPlaylistLength = musicPlaylist.length;
 
   const changePrevSong = (isAuto: boolean = true) => {
@@ -82,9 +75,9 @@ const MusicPlayer = ({
 
     const prevFn = () => {
       if (musicPlayIndex > 0) {
-        setMusicPlayIndex(musicPlayIndex - 1);
+        musicPlayIndex--;
       } else {
-        setMusicPlayIndex(musicPlaylistLength - 1);
+        musicPlayIndex = musicPlaylistLength - 1;
       }
     };
     if (playMode === PlayMode.ORDER) {
@@ -97,7 +90,7 @@ const MusicPlayer = ({
       }
     } else {
       const randomNum = getRandomNum(musicPlayIndex, musicPlaylistLength);
-      setMusicPlayIndex(randomNum);
+      musicPlayIndex = randomNum;
     }
   };
 
@@ -109,9 +102,9 @@ const MusicPlayer = ({
 
     const nextFn = () => {
       if (musicPlayIndex < musicPlaylistLength - 1) {
-        setMusicPlayIndex(musicPlayIndex + 1);
+        musicPlayIndex++;
       } else {
-        setMusicPlayIndex(0);
+        musicPlayIndex = 0;
       }
     };
     if (playMode === PlayMode.ORDER) {
@@ -124,7 +117,7 @@ const MusicPlayer = ({
       }
     } else {
       const randomNum = getRandomNum(musicPlayIndex, musicPlaylistLength);
-      setMusicPlayIndex(randomNum);
+      musicPlayIndex = randomNum;
     }
   };
 
@@ -280,11 +273,11 @@ const MusicPlayer = ({
           changeMode={changePlayMode}
           next={changeNextSong}
           prev={changePrevSong}
-          onOpen={()=>setIsFull(true)}
+          onOpen={() => setIsFull(true)}
         />
       )}
     </div>
   );
 };
 
-export default MusicPlayer;
+export default observer(MusicPlayer);

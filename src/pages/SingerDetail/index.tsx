@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./index.less";
 import { useLocation } from "react-router-dom";
 import qs from "query-string";
+import { observer } from "@formily/reactive-react";
 
+import store from "@/store";
 import artistsApi, { SingerDetailData } from "@/api/artists";
 import type { IRouterComponentProps } from "@/router";
-import {
-  useAddMusicPlaylist,
-  useSetMusicPlaylist,
-} from "@/store/musicPlaylistReducer";
 
 import BackHeader from "@/components/BackHeader";
 import PlayAll from "@/components/PlayAll";
@@ -34,10 +32,6 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
     })();
   }, []);
 
-  const addMusicPlaylist = useAddMusicPlaylist();
-
-  const setMusicPlaylist = useSetMusicPlaylist();
-
   const handledSingerSongs = singerSongs.map(
     ({ id, name, al: { picUrl } }) => ({
       id,
@@ -52,12 +46,16 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
       <div className="singer-pic">
         <img src={singerMsg.picUrl} alt="" />
       </div>
-      <PlayAll onClick={() => setMusicPlaylist(handledSingerSongs)} />
+      <PlayAll
+        onClick={() => {
+          store.musicPlaylist = handledSingerSongs;
+        }}
+      />
       {handledSingerSongs.map(({ id, name, picUrl }) => (
         <div
           className="singer-songs-item"
           key={id}
-          onClick={() => addMusicPlaylist({ id, name, picUrl })}
+          onClick={() => store.musicPlaylist.unshift({ id, name, picUrl })}
         >
           {name}
         </div>
@@ -66,4 +64,4 @@ const SingerDetail = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   );
 };
 
-export default SingerDetail;
+export default observer(SingerDetail);

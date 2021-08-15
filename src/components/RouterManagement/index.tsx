@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./index.less";
 import { BrowserRouter, useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import classnames from "classnames";
+import { observer } from "@formily/reactive-react";
 
 import NavigationHeader from "@/components/NavigationHeader";
 import MusicPlayer from "@/components/MusicPlayer";
 import TransitionRouter, {
   ITransitionRouterProps,
 } from "@/components/TransitionRouter";
+import store from "@/store";
 
 import { routerWithHeader } from "@/router";
-import type { StoreState } from "@/store/types";
 
 const NO_INDEX = -1 as const;
 
-const RouterManagement = (): JSX.Element => {
+const RouterManagement = observer((): JSX.Element => {
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -27,7 +27,6 @@ const RouterManagement = (): JSX.Element => {
     useState<ITransitionRouterProps["transitionClass"]>("forward");
 
   useEffect(() => {
-    // history.push("/singerDetail?id=12127564");
     history.push("/home");
   }, []);
 
@@ -51,14 +50,10 @@ const RouterManagement = (): JSX.Element => {
     setTransitionClass("back");
   };
 
-  const { musicPlaylist, musicPlayIndex } = useSelector<StoreState, StoreState>(
-    (state) => state
-  );
-
   return (
     <div
       className={classnames({
-        "bottom-padding": !!musicPlaylist.length,
+        "bottom-padding": !!store.musicPlaylist.length,
       })}
     >
       {routerWithHeader.includes(pathname) && (
@@ -73,15 +68,15 @@ const RouterManagement = (): JSX.Element => {
         transitionClass={transitionClass}
       />
 
-      {!!musicPlaylist.length && (
+      {!!store.musicPlaylist.length && (
         <MusicPlayer
-          musicPlaylist={musicPlaylist}
-          musicPlayIndex={musicPlayIndex}
+          musicPlaylist={store.musicPlaylist}
+          musicPlayIndex={store.musicPlayIndex}
         />
       )}
     </div>
   );
-};
+});
 
 export default (): JSX.Element => (
   <BrowserRouter>

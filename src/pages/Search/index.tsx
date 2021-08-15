@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./index.less";
 import { Search as SearchLogo, CloseOne } from "@icon-park/react";
+import { observer } from "@formily/reactive-react";
+import { useHistory } from "react-router";
 
+import store from "@/store";
 import BackHeader from "@/components/BackHeader";
 import type { IRouterComponentProps } from "@/router";
 
@@ -12,6 +15,8 @@ import { useDebounce, useImmer } from "@/hooks";
 import { HISTORY_SEARCH_KEY } from "@/config";
 
 const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
+  const history = useHistory();
+
   const [searchValue, setSearchValue] = useState<string>("");
 
   const debouncedSearchValue = useDebounce(searchValue);
@@ -157,17 +162,27 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
             <div
               className="search-singer-item"
               key={id}
-              onClick={() => addHistoryList(name)}
+              onClick={() => {
+                history.push(`/singerDetail?id=${id}`);
+                addHistoryList(name);
+              }}
             >
               <img src={picUrl} alt="" />
               <div className="search-singer-name">{name}</div>
             </div>
           ))}
-          {searchSongs.map(({ id, name }) => (
+          {searchSongs.map(({ id, name, artists }) => (
             <div
               className="search-song-item"
               key={id}
-              onClick={() => addHistoryList(name)}
+              onClick={() => {
+                store.musicPlaylist.unshift({
+                  id,
+                  name,
+                  picUrl: artists[0].img1v1Url,
+                });
+                addHistoryList(name);
+              }}
             >
               {name}
             </div>
@@ -178,4 +193,4 @@ const Search = ({ onRouterBack }: IRouterComponentProps): JSX.Element => {
   );
 };
 
-export default Search;
+export default observer(Search);
